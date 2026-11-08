@@ -28,11 +28,11 @@ in
   # doom 命令进 PATH（bin 在 ~/.emacs.d/bin，非 ~/.config/emacs/bin）
   home.sessionPath = [ "$HOME/.emacs.d/bin" ];
 
-  # 首次自动克隆 doom 核心；之后每次 switch 刷新包与 autoloads
+  # 首次自动克隆 doom 核心；之后每次 switch 安装声明的新包并刷新 autoloads
   home.activation.installDoom = ''
     if [ ! -x "$HOME/.emacs.d/bin/doom" ]; then
       git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.emacs.d"
     fi
-    PATH="$HOME/.emacs.d/bin:$PATH" doom sync -u
+    "$HOME/.emacs.d/bin/doom" sync
   '';
 }
