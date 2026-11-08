@@ -1,0 +1,9 @@
+creation_rules:
+  - path_regex: ^secrets/hosts/pu500c\.yaml$
+    age: age1petwhpcl20tv7tcnt6lrz24m2zv0fnzmpm26kmqh3ufk2ul6j52q6jksqd
+  - path_regex: ^secrets/hosts/um480xt\.yaml$
+    age: age1uelfyfx5sg3hqs8y5s6k85895mpkal0jpm7c0g9akyyt2q8jwc0sk3qpjr
+  - path_regex: ^secrets/hosts/demo\.yaml$
+    age: age1petwhpcl20tv7tcnt6lrz24m2zv0fnzmpm26kmqh3ufk2ul6j52q6jksqd
+  - path_regex: ^secrets/users/.*\.yaml$
+    age: age1gwzeamdp68qz7cvpt8fyv20vc9m3qgn7h3z8pr22mhmvqqq3jpaq6eqkx7
