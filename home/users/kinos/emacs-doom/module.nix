@@ -22,23 +22,11 @@ in
     # Service.Environment = [ "GTK_THEME=Gruvbox-Dark" ];  # 外壳美化，注释对比
   };
 
-  # 用户 Doom 配置
+  # 用户 Doom 配置（HM 只负责把这份配置落盘到 ~/.config/doom）
   xdg.configFile."doom".source = ./config;
 
-  # doom 命令进 PATH
+  # doom 命令进 PATH：克隆 doomemacs 后可直接敲 `doom sync`
+  # 注意：首次需自己 `git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d`
+  # 以及 `doom sync`；HM 不再自动跑这些。
   home.sessionPath = [ "$HOME/.emacs.d/bin" ];
-
-  # 首次自动克隆 doom 核心；之后每次 switch 安装声明的新包并刷新 autoloads
-  # 注意：HM 的 activation 阶段在 installPackages 之前跑，此时 emacs 往往还没进
-  # ~/.nix-profile/bin（尤其之前 installPackages 因冲突中止、profile 被改坏时）。
-  # 所以这里直接把 emacs 派生本身的 /bin 绝对路径塞进 PATH（并设 EMACS），与
-  # profile 装没装完彻底解耦；git 走系统层 /run/current-system/sw/bin。
-  home.activation.installDoom = ''
-    export PATH="${emacsWithDeps}/bin:$HOME/.nix-profile/bin:/run/current-system/sw/bin:$PATH"
-    export EMACS="${emacsWithDeps}/bin/emacs"
-    if [ ! -x "$HOME/.emacs.d/bin/doom" ]; then
-      git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.emacs.d"
-    fi
-    "$HOME/.emacs.d/bin/doom" sync
-  '';
 }
