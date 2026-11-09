@@ -29,7 +29,11 @@ in
   home.sessionPath = [ "$HOME/.emacs.d/bin" ];
 
   # 首次自动克隆 doom 核心；之后每次 switch 安装声明的新包并刷新 autoloads
+  # 注意：HM 生成的 activation PATH 只含 coreutils + nix 所在目录（解析进 store，
+  # 没有 ~/.nix-profile/bin），所以 emacs/git 在 activation 里默认找不到。这里手动
+  # 把 home profile 与系统 bin 补到 PATH 前面，doom sync 才能用到 emacs、克隆用到 git。
   home.activation.installDoom = ''
+    export PATH="$HOME/.nix-profile/bin:/run/current-system/sw/bin:$PATH"
     if [ ! -x "$HOME/.emacs.d/bin/doom" ]; then
       git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.emacs.d"
     fi
