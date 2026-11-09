@@ -22,10 +22,10 @@ in
     # Service.Environment = [ "GTK_THEME=Gruvbox-Dark" ];  # 外壳美化，注释对比
   };
 
-  # 用户 Doom 配置（init.el/config.el/packages.el）
+  # 用户 Doom 配置
   xdg.configFile."doom".source = ./config;
 
-  # doom 命令进 PATH（bin 在 ~/.emacs.d/bin，非 ~/.config/emacs/bin）
+  # doom 命令进 PATH
   home.sessionPath = [ "$HOME/.emacs.d/bin" ];
 
   # 首次自动克隆 doom 核心；之后每次 switch 安装声明的新包并刷新 autoloads
