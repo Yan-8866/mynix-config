@@ -1,9 +1,16 @@
+keys:
+  - &admin age1gwzeamdp68qz7cvpt8fyv20vc9m3qgn7h3z8pr22mhmvqqq3jpaq6eqkx7
+  - &um480xt age1uelfyfx5sg3hqs8y5s6k85895mpkal0jpm7c0g9akyyt2q8jwc0sk3qpjr
+  - &pu500c age1petwhpcl20tv7tcnt6lrz24m2zv0fnzmpm26kmqh3ufk2ul6j52q6jksqd
+
 creation_rules:
-  - path_regex: ^secrets/hosts/pu500c\.yaml$
-    age: age1petwhpcl20tv7tcnt6lrz24m2zv0fnzmpm26kmqh3ufk2ul6j52q6jksqd
+  # 主机密文：主机 SSH key + 管理员 key，管理员可离线编辑
   - path_regex: ^secrets/hosts/um480xt\.yaml$
-    age: age1uelfyfx5sg3hqs8y5s6k85895mpkal0jpm7c0g9akyyt2q8jwc0sk3qpjr
+    age: [ *um480xt, *admin ]
+  - path_regex: ^secrets/hosts/pu500c\.yaml$
+    age: [ *pu500c, *admin ]
   - path_regex: ^secrets/hosts/demo\.yaml$
-    age: age1petwhpcl20tv7tcnt6lrz24m2zv0fnzmpm26kmqh3ufk2ul6j52q6jksqd
-  - path_regex: ^secrets/users/.*\.yaml$
-    age: age1gwzeamdp68qz7cvpt8fyv20vc9m3qgn7h3z8pr22mhmvqqq3jpaq6eqkx7
+    age: [ *pu500c, *admin ] # demo 当前复用 pu500c 主机密钥，待独立
+  # 用户密文：当前统一为管理员 age key，由管理员代管
+  - path_regex: ^secrets/users/[^/]+\.yaml$
+    age: [ *admin ]

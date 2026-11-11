@@ -58,7 +58,7 @@
        lsp                             ; 语言服务器协议（LSP）
        ;; 未来开启
        ;;make                          ; 从 Emacs 运行 make 任务
-       ;;tree-sitter                   ; 语法解析与高亮
+       tree-sitter                     ; 语法解析与高亮
        ;;debugger                      ; 代码调试
 
        :os
@@ -68,14 +68,15 @@
        :lang
        ;; 默认开启
        emacs-lisp                      ; Emacs Lisp
-       markdown                        ; Markdown 文档
+       (markdown +lsp +tree-sitter)    ; Markdown；LSP + 语法树高亮
        org                             ; Org 笔记/日程
-       sh                              ; Shell 脚本
+       (sh +lsp)                       ; Shell；LSP；tree-sitter 在 config.el 注册
        ;; 默认关闭
-       (cc +lsp)                       ; C/C++；+lsp 启用语言服务器
-       (nix +lsp)                      ; Nix 配置支持；+lsp 启用语言服务器
-       (rust +lsp)                     ; Rust；+lsp 启用语言服务器
-       json                            ; At least it ain't XML
+       (lua +lsp +tree-sitter)         ; Lua；LSP + 语法树高亮
+       (cc +lsp +tree-sitter)          ; C/C++；LSP + 语法树高亮
+       (nix +lsp +tree-sitter)         ; Nix；LSP + 语法树高亮
+       (rust +lsp +tree-sitter)        ; Rust；LSP + 语法树高亮
+       (json +lsp +tree-sitter)        ; JSON；LSP + 语法树高亮
 
        :email
 

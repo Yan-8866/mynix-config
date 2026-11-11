@@ -13,10 +13,19 @@
     ];
 
     fontconfig.defaultFonts = {
-      monospace = [ "JetBrainsMono Nerd Font" "Sarasa Mono SC" ];
-      sansSerif = [ "Inter" "Noto Sans CJK SC" ];
-      serif     = [ "Literata" "Noto Serif CJK SC" ];
-      emoji     = [ "Noto Color Emoji" ];
+      monospace = [
+        "JetBrainsMono Nerd Font"
+        "Sarasa Mono SC"
+      ];
+      sansSerif = [
+        "Inter"
+        "Noto Sans CJK SC"
+      ];
+      serif = [
+        "Literata"
+        "Noto Serif CJK SC"
+      ];
+      emoji = [ "Noto Color Emoji" ];
     };
   };
 }

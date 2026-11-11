@@ -7,10 +7,10 @@ in
   systems = lib.unique (lib.mapAttrsToList (_: machine: machine.system) machines);
 
   perSystem = { pkgs, ... }: {
-    formatter = pkgs.nixfmt;
+    formatter = pkgs.nixfmt-tree;
     devShells.default = pkgs.mkShell {
       packages = [
-        pkgs.nixfmt
+        pkgs.nixfmt-tree
         pkgs.sops
         pkgs.age
         pkgs.ssh-to-age

@@ -1,4 +1,4 @@
-;;; keys.el -*- lexical-binding-t; -*-
+;;; keys.el -*- lexical-binding: t; -*-
 
 ;; 【本人自建】解绑 SPC w 下与不带 Ctrl 键重复的 Ctrl 版。
 (after! evil
@@ -132,29 +132,4 @@
     "SPC f l"     "locate 搜文件"
 
     "SPC f c"     "打开项目的 editorconfig"
-    ;; ---- SPC w 已停用（键位已在上方解绑，文案留档） ----
-    ;; "SPC w C-h"    "挪到左边"
-    ;; "SPC w C-j"    "挪到下边"
-    ;; "SPC w C-k"    "挪到上边"
-    ;; "SPC w C-l"    "挪到右边"
-    ;; "SPC w C-v"    "左右劈开"
-    ;; "SPC w C-s"    "上下劈开"
-    ;; "SPC w C-S-s"  "上下劈开"
-    ;; "SPC w C-n"    "新开一块"
-    ;; "SPC w C-q"    "退出"
-    ;; "SPC w C-p"    "最近用过的那块"
-    ;; "SPC w C-b"    "跳右下角那块"
-    ;; "SPC w C-t"    "跳左上角那块"
-    ;; "SPC w C-f"    "在另一块打开路径"
-    ;; "SPC w C-="    "均分大小"
-    ;; "SPC w C-_"    "高度设为 N 行"
-    ;; "SPC w C-x"    "与下一块互换"
-    ;; "SPC w C-S-h"  "整块挪到最左"
-    ;; "SPC w C-S-j"  "整块挪到最下"
-    ;; "SPC w C-S-k"  "整块挪到最上"
-    ;; "SPC w C-S-l"  "整块挪到最右"
-    ;; "SPC w C-S-r"  "逆时针轮一圈"
-    ;; "SPC w C-S-W"  "上一块"
-    ;; "SPC w C-c"    "关掉这块"
-    ;; "SPC w C-u"    "撤销布局改动"
 ))

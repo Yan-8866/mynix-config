@@ -16,9 +16,9 @@ let
         inputs = inputs;
         hostName = host;
         userName = user;
-        isNixos = machine.nixos or true;
       };
       modules = [
+        ./modules/identity.nix
         ./users/${user}
       ]
       ++ lib.optional (builtins.pathExists ./users/${user}/${host}.nix) ./users/${user}/${host}.nix
@@ -31,5 +31,5 @@ in
     lib.listToAttrs (
       map (user: lib.nameValuePair "${user}@${host}" (mkHome host machine user)) machine.users
     )
-  ) machines;
+  ) (lib.filterAttrs (_: machine: !(machine.placeholder or false)) machines);
 }

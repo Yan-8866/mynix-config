@@ -3,6 +3,7 @@
     pu500c = {
       system = "x86_64-linux";
       users = [ "jun" ];
+      placeholder = true;
     };
     um480xt = {
       system = "x86_64-linux";
@@ -11,6 +12,7 @@
     demo = {
       system = "x86_64-linux";
       users = [ "demo" ];
+      placeholder = true;
     };
     arch = {
       system = "x86_64-linux";

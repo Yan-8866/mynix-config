@@ -1,4 +1,1 @@
-{ ... }:
-{
-  imports = [ ../../modules/identity.nix ];
-}
+{ ... }: { }

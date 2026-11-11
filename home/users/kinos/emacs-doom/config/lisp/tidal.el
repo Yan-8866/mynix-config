@@ -65,4 +65,5 @@
          "9" #'tidal-stop-d9
          "0" #'tidal-stop-d10)))
 
-(set-popup-rule! "^\\*tidal\\*$" :side 'bottom :size 0.3 :quit nil :select nil)
+(when (fboundp 'set-popup-rule!)
+  (set-popup-rule! "^\\*tidal\\*$" :side 'bottom :size 0.3 :quit nil :select nil))

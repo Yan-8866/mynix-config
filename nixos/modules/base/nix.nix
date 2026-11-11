@@ -2,7 +2,10 @@
 
 {
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
 
     substituters = [
       "https://mirrors.sjtug.sjtu.edu.cn/nix-channels/store"

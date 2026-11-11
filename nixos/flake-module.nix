@@ -21,6 +21,6 @@ let
 in
 {
   flake.nixosConfigurations = lib.mapAttrs mkSystem (
-    lib.filterAttrs (_: machine: machine.nixos or true) machines
+    lib.filterAttrs (_: machine: (machine.nixos or true) && !(machine.placeholder or false)) machines
   );
 }

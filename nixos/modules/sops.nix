@@ -4,11 +4,4 @@
 
   sops.defaultSopsFile = ../../secrets/hosts/${hostName}.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-
-  sops.secrets."age-key" = {
-    path = "/etc/sops/age/keys.txt";
-    owner = "root";
-    group = "users";
-    mode = "0440";
-  };
 }

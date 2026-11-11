@@ -1,8 +1,16 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
-  emacs = pkgs.emacs-pgtk;
-  emacsWithDeps = emacs.pkgs.withPackages (ep: [ ep.vterm ep.pdf-tools ]);
+  emacs = pkgs.emacs-unstable-pgtk;
+  emacsWithDeps = emacs.pkgs.withPackages (ep: [
+    ep.vterm
+    ep.pdf-tools
+    # 全量 grammar；由 Emacs wrapper 注入 treesit-extra-load-path
+    ep.treesit-grammars.with-all-grammars
+  ]);
+  doomRepo = "https://github.com/doomemacs/doomemacs";
+  doomRev = "v2.2.4";
+  git = "${pkgs.git}/bin/git";
 in
 {
   home.packages = [
@@ -11,7 +19,7 @@ in
     pkgs.ripgrep
     pkgs.fd
     pkgs.imagemagick
-    # pkgs.gruvbox-gtk-theme  # 外壳美化：Emacs 的 GTK 对话框主题，先注释看差别
+    pkgs.symbola
   ];
 
   services.emacs = {
@@ -20,19 +28,24 @@ in
     client.enable = true;
     defaultEditor = true;
     startWithUserSession = "graphical";
-    # Service.Environment = [ "GTK_THEME=Gruvbox-Dark" ];  # 外壳美化，注释对比
   };
 
   # 用户 Doom 配置
   xdg.configFile."doom".source = ./config;
 
+  # org 默认目录
+  home.file."org/.keep".text = "";
+
   # doom 命令进 PATH
   home.sessionPath = [ "$HOME/.emacs.d/bin" ];
 
-  # 克隆 Doom 核心
-  home.activation.installDoomCore = ''
-    if [ ! -x "$HOME/.emacs.d/bin/doom" ]; then
-      ${pkgs.git}/bin/git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.emacs.d"
+  # 克隆或修复 Doom 核心（固定版本 + 初始化模块子模块）
+  home.activation.installDoomCore = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    DOOM_DIR="$HOME/.emacs.d"
+    if [ "$(${git} -C "$DOOM_DIR" describe --tags --exact-match 2>/dev/null || true)" != "${doomRev}" ]; then
+      rm -rf "$DOOM_DIR"
+      ${git} clone --depth 1 --branch ${doomRev} --recurse-submodules ${doomRepo} "$DOOM_DIR"
     fi
+    ${git} -C "$DOOM_DIR" submodule update --init --recursive --depth 1
   '';
 }

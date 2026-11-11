@@ -1,8 +1,6 @@
 # Nix build result symlinks
 /result
 /result-*
-result
-result-*
 
 # direnv
 /.direnv

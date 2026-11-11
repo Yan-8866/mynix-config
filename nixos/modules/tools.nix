@@ -1,8 +1,10 @@
 { pkgs, ... }:
 
 {
+  programs.fish.enable = true;
+  users.defaultUserShell = pkgs.fish;
+
   environment.systemPackages = [
-    pkgs.bash
     pkgs.git
     pkgs.vim
   ];
