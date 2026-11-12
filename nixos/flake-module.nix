@@ -15,8 +15,7 @@ let
       modules = [
         ./modules
         ./hosts/${name}
-      ]
-      ++ lib.optional (builtins.pathExists ../secrets/hosts/${name}.yaml) ./modules/sops.nix;
+      ];
     };
 in
 {

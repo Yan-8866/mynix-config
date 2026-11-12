@@ -4,6 +4,7 @@
     ./cli/dev.nix
     ./cli/github.nix
     ./cli/opencode.nix
+    ../../modules/mihomo.nix
     ./shell/fish.nix
     ./shell/starship.nix
     ./tui/bilibili-tui.nix

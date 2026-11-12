@@ -5,3 +5,6 @@
 # direnv
 /.direnv
 /.envrc
+
+# age 私钥，绝不入库
+*.agekey

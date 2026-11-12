@@ -1,26 +1,40 @@
-{ config, ... }:
+{ ... }:
 {
   users.mutableUsers = false;
 
-  sops.secrets."jun-password".neededForUsers = true;
-  sops.secrets."root-password".neededForUsers = true;
-
   users.users = {
-    jun = {
+    kinos = {
       isNormalUser = true;
-      description = "jun";
-      home = "/home/jun";
+      uid = 1000;
+      description = "kinos";
+      home = "/home/kinos";
       extraGroups = [
         "networkmanager"
         "video"
         "wheel"
       ];
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAhkqy59JE3S2aD2cCrXi9fml49QBIe8OGr7oTPn4eve jun@pu500c"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEQxtRLAYrqBcbMUVJVlFKBYzt0UDqvh3F9YAbKVgHRG"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGD0KRgkgxMXY2OyiTHs3pOcwZCBCW1RrSIQariGm0xB"
       ];
-      hashedPasswordFile = config.sops.secrets."jun-password".path;
+      hashedPassword = "$y$j9T$pFvm9WRCU8aDkSNedHLeI/$g6VYXTj5pZfAwPHCddFghEt.lznnGMkaIyUiwIUcrjC";
     };
 
-    root.hashedPasswordFile = config.sops.secrets."root-password".path;
+    jun = {
+      isNormalUser = true;
+      uid = 1001;
+      description = "jun";
+      home = "/home/jun";
+      extraGroups = [
+        "networkmanager"
+        "video"
+      ];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAhkqy59JE3S2aD2cCrXi9fml49QBIe8OGr7oTPn4eve jun@pu500c"
+      ];
+      hashedPassword = "$y$j9T$23U/mIfvEhWK30z6Zkb.i.$7aVAcjHhuP0bebqIxPJUQh.H9wgujXyqq3M/6k5ZND8";
+    };
+
+    root.hashedPassword = "!";
   };
 }

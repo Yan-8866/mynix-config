@@ -9,8 +9,14 @@
         oauth_token: ${config.sops.placeholder."github-token"}
   '';
 
-  # gh 的 credential helper 依赖 git 模块生成 config
-  programs.git.enable = true;
+  # git 身份与 gh credential helper 都由 HM 声明式生成
+  programs.git = {
+    enable = true;
+    settings.user = {
+      name = "kinos";
+      email = "kinos@users.noreply.github.com";
+    };
+  };
   programs.gh.enable = true;
 
   # 模板在 store 外，用 symlink 让 gh 读取

@@ -1,6 +1,6 @@
 # AGENTS.md
 
-NixOS + 独立 Home Manager flake。主要目标：`um480xt` / `kinos`。
+NixOS + 独立 Home Manager flake。主要目标：`um480xt` / `kinos`、`pu500c` / `jun`。
 
 ## 常用命令
 
@@ -18,16 +18,19 @@ NixOS + 独立 Home Manager flake。主要目标：`um480xt` / `kinos`。
 - `nixos/hosts/<host>/`：主机私有
 - `home/modules/`：共享用户模块
 - `home/users/<user>/`：用户私有
-- `secrets/`：sops 密文，禁止明文
+- `secrets/users/<user>.yaml`：用户级 sops 密文，禁止明文
 
 ## 规则
 
-- `pu500c` / `demo` 是占位主机（`inventory.nix` 中 `placeholder = true`），不生成配置；其 `secrets/` 可能过期，勿修复
+- `demo` / `arch` 是占位主机（`inventory.nix` 中 `placeholder = true`），不生成配置
+- NixOS 不参与 sops；密码 hash 直接写在 `accounts.nix`，root 锁定
+- 用户 secret 走 Home Manager sops，key 在 `~/.config/sops/age/keys.txt`
+- `kinos` 是每台主机的 wheel 管理员；`jun` 不是 wheel
 - 私有配置只放对应 host/user，不放 `modules`
 - 独立 HM：改用户配置只跑 `hm-switch`，改系统才跑 `nix-switch`
 - 不主动 commit/push；不输出或提交密钥明文
 - `um480xt` 不启用静态网络/旁路由；网络走 DHCP + mihomo TUN
-- mihomo 在 `nixos/hosts/um480xt/mihomo.nix`，DNS 用 `insertNameservers = [ "198.18.0.2" ]`
+- mihomo：NixOS 服务在 `nixos/hosts/<host>/mihomo.nix`，secret/模板在 `home/modules/mihomo.nix`；登录并 HM 激活后由 path unit 启动
 - Emacs：`emacs-unstable-pgtk` 31.1 + Doom `v2.2.4`
 - tree-sitter grammar 用 `ep.treesit-grammars.with-all-grammars`
 - 改 `init.el` / `packages.el` 后：`~/.emacs.d/bin/doom sync --force`，再 `systemctl --user restart emacs`

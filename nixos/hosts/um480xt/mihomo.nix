@@ -1,39 +1,33 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
-
+let
+  configPath = "/home/kinos/.config/sops-nix/secrets/rendered/mihomo.yaml";
+in
 {
   # 系统 DNS 优先走 mihomo TUN，DHCP DNS 保留为 fallback
   networking.networkmanager.insertNameservers = [ "198.18.0.2" ];
-
-  sops.secrets.mihomo-subscription-url = { };
-  sops.secrets.mihomo-webui-secret = { };
-
-  sops.templates."mihomo.yaml" = {
-    content =
-      lib.replaceStrings
-        [ "@subscription-url@" "@webui-secret@" ]
-        [ config.sops.placeholder.mihomo-subscription-url config.sops.placeholder.mihomo-webui-secret ]
-        (builtins.readFile ./mihomo.yaml);
-    restartUnits = [ "mihomo.service" ];
-  };
 
   services.mihomo = {
     enable = true;
     tunMode = true;
     webui = pkgs.metacubexd;
-    configFile = config.sops.templates."mihomo.yaml".path;
+    configFile = configPath;
   };
 
-  systemd.services.mihomo.serviceConfig = {
-    Restart = "on-failure";
-    RestartSec = "5s";
-    BindReadOnlyPaths = [
-      "${pkgs.v2ray-rules-dat}/share/v2ray/geoip.dat:/var/lib/private/mihomo/geoip.dat"
-      "${pkgs.v2ray-rules-dat}/share/v2ray/geosite.dat:/var/lib/private/mihomo/geosite.dat"
-    ];
+  systemd.services.mihomo = {
+    unitConfig.StartLimitIntervalSec = 0;
+    serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = "10s";
+      ExecStartPre = [
+        "+${pkgs.bash}/bin/bash -c 'test -f ${configPath}'"
+      ];
+      BindReadOnlyPaths = [
+        "${pkgs.v2ray-rules-dat}/share/v2ray/geoip.dat:/var/lib/private/mihomo/geoip.dat"
+        "${pkgs.v2ray-rules-dat}/share/v2ray/geosite.dat:/var/lib/private/mihomo/geosite.dat"
+      ];
+    };
   };
 }
