@@ -20,7 +20,7 @@
        workspaces                      ; 工作区（保存/切换窗口布局）
        ;; 默认关闭
        (window-select +numbers)        ; 窗口选择；+numbers 显示数字标签，按数字跳窗口
-       treemacs                        ; 文件树侧边栏
+       (treemacs +lsp)                 ; 文件树侧边栏；+lsp 启用 lsp-treemacs 符号树
 
        :editor
        ;; 默认开启

@@ -16,6 +16,7 @@
 
     # Nix
     nil # LSP
+    nixfmt # 保存时格式化（apheleia）
     sops # 编辑 secrets/*.yaml
 
     # Lua

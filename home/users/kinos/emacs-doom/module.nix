@@ -5,6 +5,7 @@ let
   emacsWithDeps = emacs.pkgs.withPackages (ep: [
     ep.vterm
     ep.pdf-tools
+    ep.gt
     # 全量 grammar；由 Emacs wrapper 注入 treesit-extra-load-path
     ep.treesit-grammars.with-all-grammars
   ]);
@@ -18,6 +19,7 @@ in
     pkgs.git
     pkgs.ripgrep
     pkgs.fd
+    pkgs.pandoc
     pkgs.imagemagick
     pkgs.symbola
   ];
